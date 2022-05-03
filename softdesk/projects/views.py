@@ -1,4 +1,5 @@
 from rest_framework import mixins, generics
+from rest_framework.validators import ValidationError
 
 from .models import Project
 from .serializers import ProjectSerializer
@@ -18,6 +19,9 @@ class ProjectList(mixins.ListModelMixin,
         return self.list(request, *args, *kwargs)
     
     def post(self, request, *args, **kwargs):
+        print(request.POST["type"])
+        if not request.POST["type"]:
+            raise ValidationError("You need to specify a type !")
         return self.create(request, *args, **kwargs)
 
 
