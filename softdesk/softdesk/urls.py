@@ -1,15 +1,11 @@
 from django.contrib import admin
-from django.urls import path, include
-from rest_framework import routers
+from django.urls import path
 
-from projects.views import ProjectViewset
+from projects import views
 
-
-router = routers.SimpleRouter()
-router.register('projects', ProjectViewset, basename='project')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('api/', include(router.urls)),
+    path('projects/', views.ProjectList.as_view()),
+    path('projects/<int:pk>/', views.ProjectDetail.as_view())
 ]
