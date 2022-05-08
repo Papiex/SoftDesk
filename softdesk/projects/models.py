@@ -1,19 +1,21 @@
-from django.conf import settings
 from django.db import models
 
+from enum import Enum
 
-TYPES = (
-    ('BACK-END', 'Back-end'),
-    ('FRONT-END', 'Front-end'),
-    ('ANDROID', 'Android'),
-    ('IOS', 'iOS'),
-)
+
+class Types(Enum):
+    """Enum of supports types"""
+    BACK_END = "Back-end"
+    FRONT_END = "Front-end"
+    ANDROID = "Android"
+    IOS = "iOS"
+
 
 class Project(models.Model):
     """Model defining a project"""
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=1024)
-    type = models.CharField(max_length=16, choices=TYPES, blank=True)
+    type = models.CharField(max_length=16, choices=[(types.name, types.value) for types in Types], blank=True)
     #author_user_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     # Pour test
