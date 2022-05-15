@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.validators import ValidationError
 
@@ -22,4 +23,5 @@ class IssueViewSet(viewsets.ModelViewSet):
         return Issue.objects.filter(project=self.kwargs['project_pk'])
 
     def perform_create(self, serializer):
-        serializer.save()
+        project = get_object_or_404(Project, id=self.kwargs['project_pk'])
+        serializer.save(project=project)
