@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.validators import ValidationError
 
-from .models import Issue, Project
-from .serializers import ProjectSerializer, IssueSerializer
+from .models import Issue, Project, Comment
+from .serializers import ProjectSerializer, IssueSerializer, CommentSerializer
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
@@ -26,3 +26,14 @@ class IssueViewSet(viewsets.ModelViewSet):
         """Get the project_id with get_object_or_404 method"""
         project = get_object_or_404(Project, id=self.kwargs['project_pk'])
         serializer.save(project=project)
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        return Comment.objects.filter(issue=self.kwargs['issue_pk'])
+    
+    def perform_create(self, serializer):
+        issue = get_object_or_404(Issue, id=self.kwargs['issue_pk'])
+        serializer.save(issue=issue)
