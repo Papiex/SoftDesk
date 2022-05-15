@@ -1,45 +1,28 @@
-from rest_framework import mixins, generics
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
 from rest_framework.validators import ValidationError
 
-from .models import Project
-from .serializers import ProjectSerializer
+from .models import Issue, Project
+from .serializers import ProjectSerializer, IssueSerializer
 
 
-class ProjectList(mixins.ListModelMixin,
-                  mixins.CreateModelMixin,
-                  generics.GenericAPIView):
-    """
-    GET projects list method + POST method 
-    """
-
+class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, *kwargs)
     
-    def post(self, request, *args, **kwargs):
-        if not request.POST["type"]:
+    def perform_create(self, serializer):
+        if not self.request.POST["type"]:
             raise ValidationError("You need to specify a type !")
-        return self.create(request, *args, **kwargs)
+        serializer.save()
 
 
-class ProjectDetail(mixins.RetrieveModelMixin,
-                  mixins.UpdateModelMixin,
-                  mixins.DestroyModelMixin,
-                  generics.GenericAPIView):
-    """
-    GET project detail method + PUT and DELETE methods
-    """
-    
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
+class IssueViewSet(viewsets.ModelViewSet):
+    serializer_class = IssueSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-    
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-    
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+    def get_queryset(self):
+        return Issue.objects.filter(project=self.kwargs['project_pk'])
+
+    def perform_create(self, serializer):
+        """Get the project_id with get_object_or_404 method"""
+        project = get_object_or_404(Project, id=self.kwargs['project_pk'])
+        serializer.save(project=project)
