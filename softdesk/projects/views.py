@@ -23,5 +23,6 @@ class IssueViewSet(viewsets.ModelViewSet):
         return Issue.objects.filter(project=self.kwargs['project_pk'])
 
     def perform_create(self, serializer):
+        """Get the project_id with get_object_or_404 method"""
         project = get_object_or_404(Project, id=self.kwargs['project_pk'])
         serializer.save(project=project)
