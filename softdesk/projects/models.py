@@ -30,3 +30,12 @@ class Issue(models.Model):
     author_user_id = "user_test"
     assignee_user_id = "user_test"
     created_time = models.DateTimeField(auto_now_add=True)
+
+
+class Comment(models.Model):
+    """Model defining a comment"""
+
+    issue = models.ForeignKey(to=Issue, related_name="comments", on_delete=models.CASCADE)
+    description = models.CharField(max_length=1024)
+    author_user_id = "user_test"
+    created_time = models.DateTimeField(auto_now_add=True)
