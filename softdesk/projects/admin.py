@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from projects.models import Project, Issue, Comment
 
 
@@ -9,7 +10,15 @@ class ProjectAdmin(admin.ModelAdmin):
 
 class IssueAdmin(admin.ModelAdmin):
 
-    list_display = ('title', 'description', 'tag', 'priority', 'status', 'author_user_id', 'assignee_user_id', 'created_time')
+    list_display = (
+        'title',
+        'description',
+        'tag',
+        'priority',
+        'status',
+        'author_user_id',
+        'assignee_user_id',
+        'created_time')
 
 
 class CommentAdmin(admin.ModelAdmin):
