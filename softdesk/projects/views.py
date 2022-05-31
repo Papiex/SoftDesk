@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.validators import ValidationError
 
 from .models import Issue, Project, Comment
@@ -10,6 +11,7 @@ from .serializers import ProjectSerializer, IssueSerializer, CommentSerializer
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    permission_classes = [IsAuthenticated]
     
     def perform_create(self, serializer):
         if not self.request.POST["type"]:
@@ -19,6 +21,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
 class IssueViewSet(viewsets.ModelViewSet):
     serializer_class = IssueSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = Issue.objects.filter(project=self.kwargs['project_pk'])
@@ -33,6 +36,7 @@ class IssueViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = Comment.objects.filter(issue=self.kwargs['issue_pk'])

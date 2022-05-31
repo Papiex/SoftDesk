@@ -6,6 +6,7 @@ from rest_framework_nested import routers
 from rest_framework.routers import DefaultRouter
 
 from projects import views
+from authentication.views import RegisterView
 
 
 router = DefaultRouter()
@@ -22,4 +23,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('', include(project_router.urls)),
     path('', include(issue_router.urls)),
+    path('signup/', RegisterView.as_view(), name='signup')
 ]
