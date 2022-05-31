@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer, CharField, EmailField
-from rest_framework.validators import UniqueValidator, ValidationError
+from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
 from .models import User
