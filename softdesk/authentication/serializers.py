@@ -1,10 +1,18 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, CharField, EmailField
+from rest_framework.validators import UniqueValidator
+
 from django.contrib.auth.password_validation import validate_password
 
 from .models import User
 
 
 class UserSerializer(ModelSerializer):
+
+    password = CharField(write_only=True, required=True, validators=[validate_password])
+    email = EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())])
+
     class Meta:
         model = User
         fields = ['first_name','last_name', 'username', 'email', 'password']
