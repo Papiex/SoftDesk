@@ -1,6 +1,10 @@
 from django.contrib import admin
 
-from authentication.models import User
+from .models import User
 
 
-admin.site.register(User)
+class UserAdmin(admin.ModelAdmin):
+
+    list_display = ['email', 'first_name', 'last_name', 'username']
+
+admin.site.register(User, UserAdmin)
