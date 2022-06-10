@@ -1,5 +1,4 @@
 from django.contrib.auth.models import AbstractUser
-from rest_framework.validators import UniqueValidator
 
 from django.db import models
 
