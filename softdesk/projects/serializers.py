@@ -1,5 +1,5 @@
 from django.forms import CharField
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, ReadOnlyField
 
 from projects.models import Project, Issue, Comment
 
@@ -9,7 +9,6 @@ class ProjectSerializer(ModelSerializer):
     class Meta:
         model = Project
         fields = ['id', 'title', 'description', 'type', 'author_user_id']
-        read_only_fields = ['author_user_id']
 
 
 class IssueSerializer(ModelSerializer):
