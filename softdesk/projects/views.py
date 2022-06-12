@@ -16,7 +16,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         if not self.request.POST["type"]:
             raise ValidationError("You need to specify a type !")
-        serializer.save()
+        serializer.save(author_user_id=self.request.user)
 
 
 class IssueViewSet(viewsets.ModelViewSet):
