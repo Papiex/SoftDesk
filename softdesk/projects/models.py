@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 from . import enums
+from authentication.models import User
 
 
 class Project(models.Model):
@@ -10,10 +11,21 @@ class Project(models.Model):
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=1024)
     type = models.CharField(max_length=16, choices=[(types.name, types.value) for types in enums.Types], blank=True)
-    author_user_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author_user_id = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    contributors = models.ManyToManyField(to=User, through="Contributor", related_name="contributors")
 
     def __str__(self):
         return self.title
+
+
+class Contributor(models.Model):
+    """Model defining a contributor"""
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True)
+    project = models.ForeignKey(to=Project, related_name="project_contributor", on_delete=models.CASCADE, blank=True, null=True)
+    permission = models.CharField(max_length=16, choices=[(permission.name, permission.value) for permission in enums.ProjectPermission], default="All")
+    role = models.CharField(max_length=16, choices=[(role.name, role.value) for role in enums.ProjectRole], default="Author")
+    def __str__(self) -> str:
+        return f"Contributor: {str(self.user)}"
 
 
 class Issue(models.Model):
