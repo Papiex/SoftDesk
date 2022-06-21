@@ -1,7 +1,7 @@
 from django.forms import CharField
-from rest_framework.serializers import ModelSerializer, ReadOnlyField
+from rest_framework.serializers import ModelSerializer
 
-from projects.models import Project, Issue, Comment
+from projects.models import Project, Issue, Comment, Contributor
 
 
 class ProjectSerializer(ModelSerializer):
@@ -9,6 +9,27 @@ class ProjectSerializer(ModelSerializer):
     class Meta:
         model = Project
         fields = ['id', 'title', 'description', 'type', 'author_user_id']
+        read_only_fields = ['author_user_id']
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        project = Project.objects.create(author_user_id=user,**validated_data)
+
+        Contributor.objects.create(
+            user = project.author_user_id,
+            project = project,
+            permission = "ALL",
+            role = "AUTHOR" 
+        )
+        project.save()
+        return project
+
+class ContributorSerializer(ModelSerializer):
+
+    class Meta:
+        model = Contributor
+        fields = ['user', 'project', 'permission', 'role']
+        read_only_fields = ['project']
 
 
 class IssueSerializer(ModelSerializer):
