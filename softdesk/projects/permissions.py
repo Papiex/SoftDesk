@@ -46,7 +46,7 @@ class CommentPermission(permissions.BasePermission):
 
 class ContributorPermission(permissions.BasePermission):
     """
-    Author of comment can add update and destroy contributor
+    Author of project can add and destroy contributor
     Contributor can list contributor
     """
 
