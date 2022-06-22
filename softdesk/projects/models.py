@@ -39,7 +39,7 @@ class Issue(models.Model):
     priority = models.CharField(max_length=16, choices=[(priority.name, priority.value) for priority in enums.Priorities])
     status = models.CharField(max_length=16, choices=[(status.name, status.value) for status in enums.Status])
     author_user_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    assignee_user_id = "user_test"
+    assignee_user_id = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='assignee_user')
     created_time = models.DateTimeField(auto_now_add=True)
 
 
