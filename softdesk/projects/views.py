@@ -17,9 +17,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self) -> QuerySet[Project]:
         """return projects of the connected user"""
-        queryset = Project.objects.filter(contributors=self.request.user.pk)
-        if get_object_or_404(queryset):
-            return queryset
+        return Project.objects.filter(contributors=self.request.user.pk)
 
 
 class ContributorViewSet(viewsets.ModelViewSet):
@@ -38,7 +36,6 @@ class ContributorViewSet(viewsets.ModelViewSet):
         project = Project.objects.get(pk=self.kwargs.get('project_pk'))
         serializer = ContributorSerializer(data=request.data)
         user = request.data['user']
-        user = Contributor.objects.get(pk=request.data['user'])
 
         if Contributor.objects.filter(user=user).filter(project=project).exists():
             return Response('This user is already a contributor of this project', status=status.HTTP_400_BAD_REQUEST)
