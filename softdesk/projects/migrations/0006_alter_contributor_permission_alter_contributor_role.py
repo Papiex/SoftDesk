@@ -6,18 +6,31 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('projects', '0005_remove_project_contributors_alter_contributor_user_and_more'),
+        (
+            "projects",
+            "0005_remove_project_contributors_alter_contributor_user_and_more",
+        ),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='contributor',
-            name='permission',
-            field=models.CharField(choices=[('READ', 'Read'), ('ALL', 'All')], default='All', max_length=16),
+            model_name="contributor",
+            name="permission",
+            field=models.CharField(
+                choices=[("READ", "Read"), ("ALL", "All")], default="All", max_length=16
+            ),
         ),
         migrations.AlterField(
-            model_name='contributor',
-            name='role',
-            field=models.CharField(choices=[('AUTHOR', 'Author'), ('MANAGER', 'Manager'), ('CREATOR', 'Creator')], default='Author', max_length=16),
+            model_name="contributor",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("AUTHOR", "Author"),
+                    ("MANAGER", "Manager"),
+                    ("CREATOR", "Creator"),
+                ],
+                default="Author",
+                max_length=16,
+            ),
         ),
     ]
