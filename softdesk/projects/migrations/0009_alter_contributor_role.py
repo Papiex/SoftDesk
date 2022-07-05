@@ -6,13 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('projects', '0008_alter_contributor_permission_alter_contributor_role'),
+        ("projects", "0008_alter_contributor_permission_alter_contributor_role"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='contributor',
-            name='role',
-            field=models.CharField(choices=[('AUTHOR', 'Author'), ('MANAGER', 'Manager'), ('CREATOR', 'Creator')], max_length=16),
+            model_name="contributor",
+            name="role",
+            field=models.CharField(
+                choices=[
+                    ("AUTHOR", "Author"),
+                    ("MANAGER", "Manager"),
+                    ("CREATOR", "Creator"),
+                ],
+                max_length=16,
+            ),
         ),
     ]

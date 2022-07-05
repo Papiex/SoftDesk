@@ -1,7 +1,7 @@
-from rest_framework.generics import get_object_or_404
 from rest_framework import permissions
+from rest_framework.generics import get_object_or_404
 
-from .models import Project
+from .models.project import Project
 
 
 class AuthorOrReadOnly(permissions.BasePermission):
@@ -13,8 +13,8 @@ class AuthorOrReadOnly(permissions.BasePermission):
     message = "You don't have the permission to do this !"
 
     def has_permission(self, request, view):
-        if view.kwargs.get('project_pk') is not None:
-            project = get_object_or_404(Project, id=view.kwargs.get('project_pk'))
+        if view.kwargs.get("project_pk") is not None:
+            project = get_object_or_404(Project, id=view.kwargs.get("project_pk"))
             return request.user in project.contributors.all()
         return True
 
@@ -29,12 +29,13 @@ class ContributorPermission(permissions.BasePermission):
     Author of project can add and destroy contributor
     Contributor can list contributor
     """
+
     message = "You don't have the permission to do this !"
 
     def has_permission(self, request, view) -> bool:
-        project = Project.objects.filter(id=view.kwargs['project_pk']).first()
-        if view.action in ['list', 'retrieve']:
+        project = Project.objects.filter(id=view.kwargs["project_pk"]).first()
+        if view.action in ["list", "retrieve"]:
             return request.user in project.contributors.all()
 
-        elif view.action in ['create', 'update', 'partial_update', 'destroy']:
+        elif view.action in ["create", "update", "partial_update", "destroy"]:
             return request.user == project.author_user_id
