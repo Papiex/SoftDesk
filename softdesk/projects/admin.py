@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from projects.models import Project, Issue, Comment
+from projects.models import Project, Issue, Comment, Contributor
 
 
 class ProjectAdmin(admin.ModelAdmin):
@@ -26,6 +26,12 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ('description', 'author_user_id', 'created_time')
 
 
+class ContributorAdmin(admin.ModelAdmin):
+    
+    list_display = ('user', 'project', 'permission', 'role')
+
+
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Issue, IssueAdmin)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(Contributor, ContributorAdmin)

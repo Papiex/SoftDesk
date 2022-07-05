@@ -28,3 +28,15 @@ class Priorities(Enum):
     LOW = "Low"
     MEDIUM = "Medium"
     HIGH = "High"
+
+class ProjectRole(Enum):
+    """Enum of role in a project"""
+    AUTHOR = "Author"
+    MANAGER = "Manager"
+    CREATOR = "Creator"
+
+
+class ProjectPermission(Enum):
+    """Enum of project permissions"""
+    READ = "Read"
+    ALL = "All"
