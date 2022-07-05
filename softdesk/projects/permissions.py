@@ -1,7 +1,7 @@
 from rest_framework.generics import get_object_or_404
 from rest_framework import permissions
 
-from .models import Project
+from .models.project import Project
 
 
 class AuthorOrReadOnly(permissions.BasePermission):

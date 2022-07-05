@@ -1,7 +1,9 @@
-from django.forms import CharField
 from rest_framework.serializers import ModelSerializer
 
-from projects.models import Project, Issue, Comment, Contributor
+from .models.issue import Issue
+from .models.comment import Comment
+from .models.contributor import Contributor
+from .models.project import Project
 
 
 class ProjectSerializer(ModelSerializer):

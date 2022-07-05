@@ -5,7 +5,10 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import Issue, Project, Comment, Contributor
+from .models.issue import Issue
+from .models.comment import Comment
+from .models.contributor import Contributor
+from .models.project import Project
 from .serializers import ProjectSerializer, IssueSerializer, CommentSerializer, ContributorSerializer
 from .permissions import AuthorOrReadOnly, ContributorPermission
 
