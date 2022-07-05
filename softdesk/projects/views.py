@@ -7,13 +7,12 @@ from rest_framework.response import Response
 
 from .models import Issue, Project, Comment, Contributor
 from .serializers import ProjectSerializer, IssueSerializer, CommentSerializer, ContributorSerializer
-from .permissions import AuthorOrContributorProject, IssuePermission, CommentPermission, ContributorPermission
-
+from .permissions import AuthorOrReadOnly, ContributorPermission
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-    permission_classes = [IsAuthenticated, AuthorOrContributorProject]
+    permission_classes = [IsAuthenticated, AuthorOrReadOnly]
 
     def get_queryset(self) -> QuerySet[Project]:
         """return projects of the connected user"""
@@ -45,11 +44,11 @@ class ContributorViewSet(viewsets.ModelViewSet):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    
 
 class IssueViewSet(viewsets.ModelViewSet):
     serializer_class = IssueSerializer
-    permission_classes = [IsAuthenticated, IssuePermission]
+    permission_classes = [IsAuthenticated, AuthorOrReadOnly]
 
     def get_queryset(self) -> QuerySet[Issue]:
         """Return issues of the project"""
@@ -67,7 +66,7 @@ class IssueViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated, CommentPermission]
+    permission_classes = [IsAuthenticated, AuthorOrReadOnly]
 
     def get_queryset(self) -> QuerySet[Comment]:
         """Return the comments of an issue"""
