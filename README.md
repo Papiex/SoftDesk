@@ -14,7 +14,6 @@ Authentified users will be able to create projects and in this created project :
 <li><a href="#installation-on-windows">Installation on Windows</a></li>
 <li><a href="#installation-on-linux">Installation on Linux</a></li>
 <li><a href="#installation-on-mac">Installation on Mac</a></li>
-<li><a href="#Screenshots">Screenshots</a></li>
 <li><a href="#postman-documentation">Postman Documentation</a></li>
 
 
@@ -76,8 +75,12 @@ You need to start the server with this commands :__
 - ```python3 manage.py runserver``` | Windows : ```python manage.py runserver```
 - Open your browser and go to this url : 127.0.0.1:8000
 
-## Screenshots
-
 ## Postman Documentation
 
-Documentation of each endpoints of the API and their utility/fonctionnality is available at this url : 
+Documentation of each endpoints of the API and their utility/fonctionnality is available at this url : https://documenter.getpostman.com/view/20535927/UzQuNkRL
+
+Some example of postman request :
+
+![image](https://user-images.githubusercontent.com/81369778/177341547-c28b69b3-4a97-4d2f-ad09-bc463d7c1ea4.png)
+![image](https://user-images.githubusercontent.com/81369778/177341612-7d18aa03-c3eb-46bb-98a7-2612ff2904c6.png)
+![image](https://user-images.githubusercontent.com/81369778/177341665-46deb35b-38b4-4046-879d-12e17b9c935c.png)
