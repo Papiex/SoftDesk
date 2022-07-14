@@ -78,9 +78,8 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self) -> QuerySet[Comment]:
         """Return the comments of an issue"""
-        queryset = Comment.objects.filter(issue=self.kwargs["issue_pk"])
-        if get_object_or_404(queryset):
-            return queryset
+        return Comment.objects.filter(issue=self.kwargs["issue_pk"])
+
 
     def perform_create(self, serializer):
         """Get the issue_id with get_object_or_404 method"""
