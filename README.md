@@ -77,7 +77,7 @@ You need to start the server with this commands :__
 
 ## Postman Documentation
 
-Documentation of each endpoints of the API and their utility/fonctionnality is available at this url : 
+Documentation of each endpoints of the API and their utility/fonctionnality is available at this url : https://documenter.getpostman.com/view/20535927/UzQuNkRL
 
 Some example of postman request :
 
